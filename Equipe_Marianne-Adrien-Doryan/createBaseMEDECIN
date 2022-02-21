@@ -1,0 +1,160 @@
+CREATE TABLE MEDECIN (
+	
+	id int not null identity,
+	photo varchar(50),
+	civilite varchar(50) not null,
+	typeMedecin varchar(50),
+	nom varchar(50) not null,
+	prenom varchar(50) not null,
+	age int not null,
+	specialite varchar(50) not null,
+	adresse varchar(255) not null,
+	codePostal int not null,
+	ville varchar(50),
+	typeTarif varchar(50),
+	primary key(id),
+	check (civilite in ('Monsieur', 'Madame', 'Mademoiselle')),
+	check (typeMedecin in ('Pr', 'Dr'))
+
+)
+
+CREATE table PATIENT (
+	
+	id int not null identity,
+	nom varchar(50) not null,
+	prenom varchar(50) not null,
+	adresse varchar(50) not null,
+	codePostal int not null,
+	ville varchar(50) not null,
+	sexe varchar(10),
+	dateNaissance date,
+	mail varchar(100),
+	mdp varchar(20),
+	primary key(id),
+	check (sexe in ('Masculin', 'Féminin'))
+
+)
+
+CREATE table DIPLOME (
+
+	id int not null identity,
+	intitule varchar(50) not null,
+	universite varchar(50) not null,
+	primary key(id),
+
+)
+
+CREATE table AFFILATION_MED_DIP (
+
+	id int not null identity, 
+	dateObtention date,
+	image varchar(50),
+	id_Medecin int not null,
+	id_Diplome int not null,
+	primary key(id),
+	FOREIGN KEY (id_Medecin) REFERENCES MEDECIN(id),
+	FOREIGN KEY (id_Diplome) REFERENCES DIPLOME(id),
+
+)
+
+CREATE table CONFERENCE (
+
+	id int not null identity,
+	titre varchar(50) not null,
+	dateConf date not null,
+	debut time not null,
+	fin time not null,
+	lieu varchar(50) not null,
+	adresse varchar(50) not null,
+	codePostal int not null,
+	ville varchar(50) not null,
+	primary key(id),
+
+)
+
+CREATE table PARTICIPATION_CONF (
+
+	id int not null identity, 
+	id_Medecin int not null,
+	id_Conf int not null,
+	primary key(id),
+	FOREIGN KEY (id_Medecin) REFERENCES MEDECIN(id),
+	FOREIGN KEY (id_Conf) REFERENCES CONFERENCE(id),
+
+)
+
+
+
+
+
+-- INSERTION MEDECIN
+INSERT INTO MEDECIN VALUES (' ', 'Monsieur', 'Pr', 'El Jabri', 'Abner', 51, 'Cardiologue', '55 avenue Machin', 75014, 'Paris', 'Hors secteur');
+INSERT INTO MEDECIN VALUES (' ', 'Monsieur', 'Dr', 'Bohbot', 'Isaac', 27, 'Dermatologue', '12 rue des bancs', 75002, 'Paris', 'Secteur 2');
+INSERT INTO MEDECIN VALUES (' ', 'Madame', 'Pr', 'Maderma', 'Julie', 42, 'Dermatologue', '32 avenue Machin', 75014, 'Paris', 'Hors secteur');
+INSERT INTO MEDECIN VALUES (' ', 'Monsieur', 'Dr', 'Mongéné', 'Marc', 29, 'Généraliste', '27 impasse de la couronne', 75002, 'Paris', 'Secteur 2');
+INSERT INTO MEDECIN VALUES (' ', 'Madame', 'Dr', 'Hamou', 'Laila', 61, 'Généraliste', '10 rue des Fleurs', 75005, 'Paris', 'Secteur 2');
+INSERT INTO MEDECIN VALUES (' ', 'Monsieur', 'Dr', 'Dureigne', 'Serge', 31, 'Généraliste', '3 rue Chose', 75010, 'Paris', 'Hors secteur');
+
+INSERT INTO MEDECIN VALUES (' ','Madame', 'Dr', 'Maderma', 'Julie', 56, 'Généraliste', '3 rue Chose', 75010, 'Paris', 'Hors Secteur');
+INSERT INTO MEDECIN VALUES (' ','Madame', 'Dr', 'Velter', 'Maria', 30, 'Généraliste', '231 boulevard des patients', 75017, 'Paris', 'Secteur 2');
+INSERT INTO MEDECIN VALUES (' ','Monsieur', 'Dr', 'Mongéné', 'Alban', 37, 'Généraliste', '17 rue Truc', 75019, 'Paris', 'Secteur 1');
+INSERT INTO MEDECIN VALUES (' ','Monsieur', 'Dr', 'Sipani', 'Luigi', 45, 'Chirurgien', '80 rue du Scalpel', 75013, 'Paris', 'Secteur 1');
+INSERT INTO MEDECIN VALUES (' ','Madame', 'Dr', 'Servajean', 'Nathalie', 51, 'Généraliste', '8 bis rue des contractions', 75014, 'Paris', 'Secteur 2');
+INSERT INTO MEDECIN VALUES (' ','Madame', 'Dr', 'Powel', 'Lydie', 45, 'Pédiatre', '111 avenue classroom', 75019, 'Paris', 'Secteur 2');
+
+-- INSERTION PATIENT
+INSERT INTO PATIENT VALUES ('BOSCH--TORRES', 'Marianne', 'Pétaouchnok', 99999, 'Là-bas', 'Féminin', '1995-03-22', 'marianne-torres@hotmail.fr', 'qjskdhqsdq');
+INSERT INTO PATIENT VALUES ('PEROTTI', 'Doryan', 'Pétaouchnok', 99999, 'Là-bas', 'Masculin', '1995-02-23', 'doryan.perotti@hotmail.fr', '54qjskdhqsdq');
+INSERT INTO PATIENT VALUES ('SALIOU', 'Adrien', 'Pétaouchnok', 99999, 'Là-bas', 'Masculin', '1993-09-28', 'adrien.saliou@hotmail.fr', '54q445jskdhqsdq');
+
+-- INSERTION DIPLOME
+INSERT INTO DIPLOME VALUES ('Généraliste', 'UNIV TLSE III');
+INSERT INTO DIPLOME VALUES ('Pédiatre',  'UNIV TLSE III');
+INSERT INTO DIPLOME VALUES ('Dermatologue',  'UNIV TLSE III');
+
+-- INSERTION AFFILIATION DIPLOME
+INSERT INTO AFFILATION_MED_DIP VALUES ('2015-09-03', 'mon_Bô_Diplôme.jpg', 1, 1);
+INSERT INTO AFFILATION_MED_DIP VALUES ('2016-09-03', 'mon_Bô_Diplôme2.jpg', 1, 2);
+INSERT INTO AFFILATION_MED_DIP VALUES ('2017-09-03', 'mon_Bô_Diplôme3.jpg', 1, 3);
+INSERT INTO AFFILATION_MED_DIP VALUES ('2017-05-03', 'mon_Bô_DiplômeduSwag.jpg', 2, 2);
+
+-- INSERTION CONFERENCE
+INSERT INTO CONFERENCE VALUES ('La catarate', '2022-03-25', '10:30', '11:30', 'Salle 3', '8 rue de la liberté', 31500, 'Toulouse');
+INSERT INTO CONFERENCE VALUES ('Le foie', '2022-03-08', '18:30', '20:30','Salle 3', '15 boulevard des champs', 65200, 'Toulouse');
+INSERT INTO CONFERENCE VALUES ('Le coeur', '2022-04-26', '15:15', '16:45','Salle 3', '5 rue des tulipes', 256500, 'Villers-le-Lac');
+
+-- INSERTION DANS PARTICIPATION_CONF
+INSERT INTO PARTICIPATION_CONF VALUES (1, 1);
+INSERT INTO PARTICIPATION_CONF VALUES (1, 2);
+INSERT INTO PARTICIPATION_CONF VALUES (3, 3);
+INSERT INTO PARTICIPATION_CONF VALUES (2, 2);
+INSERT INTO PARTICIPATION_CONF VALUES (2, 1);
+INSERT INTO PARTICIPATION_CONF VALUES (3, 1);
+
+select * from PATIENT
+select * from MEDECIN
+select * from DIPLOME
+select * from CONFERENCE
+select * from AFFILATION_MED_DIP
+select * from PARTICIPATION_CONF
+
+
+-- Vue pour afficher les diplômes du médecin avec l'id = 1
+SELECT MEDECIN.nom, MEDECIN.prenom, DIPLOME.intitule, DIPLOME.universite, AFFILATION_MED_DIP.dateObtention, AFFILATION_MED_DIP.image FROM AFFILATION_MED_DIP
+JOIN DIPLOME ON DIPLOME.ID = AFFILATION_MED_DIP.id_Diplome
+JOIN MEDECIN ON MEDECIN.id = AFFILATION_MED_DIP.id_Medecin
+WHERE AFFILATION_MED_DIP.id_Medecin = 1
+
+-- Vue pour afficher les conférences du médecin avec l'id = 1
+SELECT MEDECIN.nom, MEDECIN.prenom, CONFERENCE.titre, CONFERENCE.lieu, CONFERENCE.adresse, CONFERENCE.codePostal, CONFERENCE.ville FROM PARTICIPATION_CONF
+JOIN CONFERENCE ON CONFERENCE.ID = PARTICIPATION_CONF.id_Conf
+JOIN MEDECIN ON MEDECIN.id = PARTICIPATION_CONF.id_Medecin
+WHERE PARTICIPATION_CONF.id_Medecin = 1
+
+-- Vue pour afficher les médecins participant à la conf avec l'id = 1
+SELECT CONFERENCE.titre, CONFERENCE.lieu, CONFERENCE.adresse, CONFERENCE.codePostal, CONFERENCE.ville, MEDECIN.nom, MEDECIN.prenom FROM PARTICIPATION_CONF
+JOIN CONFERENCE ON CONFERENCE.ID = PARTICIPATION_CONF.id_Conf
+JOIN MEDECIN ON MEDECIN.id = PARTICIPATION_CONF.id_Medecin
+WHERE PARTICIPATION_CONF.id_Conf = 1
+
+
